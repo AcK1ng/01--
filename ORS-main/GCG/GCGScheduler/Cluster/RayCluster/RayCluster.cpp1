@@ -1,0 +1,726 @@
+#include "Base.h"
+#include "Cluster/OOQueue/OOQueue.h"
+
+#include <ray/api.h>
+
+#include <torch/csrc/distributed/c10d/TCPStore.hpp>
+
+// To enable class ProcessGroupNCCL
+#define USE_C10D_NCCL
+#include <torch/csrc/distributed/c10d/ProcessGroupNCCL.hpp>
+
+#include <torch/csrc/distributed/c10d/Backend.hpp>
+
+#include <torch/torch.h>
+
+#include <cstdio>
+#include <iostream>
+#include <memory>
+#include <stdexcept>
+#include <string>
+#include <array>
+#include <functional>
+#include <regex>
+#include <unordered_map>
+
+static auto
+init_TorchDist(std::string master_ip, size_t world_size, Rank rank) {
+    std::cout << "I'm rank[" << rank << "] "
+              << "MasterIP[" << master_ip << "] "
+              << "WorldSize[" << world_size << "] "
+              << std::endl;
+    uint16_t port = 29500;
+    bool isServer = (rank == 0);
+    std::chrono::milliseconds timeout = std::chrono::milliseconds(10000);
+    std::optional<std::size_t> numWorkers = world_size;
+    bool waitWorkers = false;
+    bool multiTenant = true;
+    std::optional<int> masterListenFd = c10::nullopt;
+    bool useLibUV = false;
+    c10d::TCPStoreOptions opts{port,
+        isServer,
+        numWorkers,
+        waitWorkers,
+        timeout,
+        multiTenant,
+        masterListenFd,
+        useLibUV};
+
+    auto store = c10::make_intrusive<::c10d::TCPStore>(master_ip, opts);
+    auto pg = std::make_shared<c10d::ProcessGroupNCCL>(store, rank, world_size);
+    std::cout << "Torch Distributed OK!" << std::endl;
+    return pg;
+}
+
+class MasterActor; // forward declaration
+class AcceleratorActor final: public AcceleratorsAgent {
+public:
+    AcceleratorActor(Rank rank,
+            StreamID nr_streams,
+            HostID host_id,
+            int local_device_id,
+            std::string dev_str,
+            int dev_idx);
+
+    virtual void SendEventToMaster(Rank from,
+            MasterEventEnum,
+            std::optional<IssuingID>,
+            std::shared_ptr<MasterEventParamPayload>) override;
+    virtual void SendTraceToRemoteAccelerator(Rank to,
+            Trace,
+            std::shared_ptr<TracePayload>,
+            std::optional<IssuingID> hint_issuing_id = std::nullopt) override;
+
+    void PermitThisRecvs(std::vector<std::shared_ptr<TransmitSpec>> &trans_specs) {
+        for (auto trans_spec: trans_specs) {
+            this->AcceleratorsAgent::LeaveTraceFromRemote(this->rank,
+                    Trace({std::nullopt, trans_spec->transmit_id}),
+                    trans_spec->variable_descriptor,
+                    trans_spec->hint_issuing_id);
+        }
+    }
+
+    // Used for notifying send op
+    void LeaveTraceFromRemote__without_issuing_id(Trace trace) {
+        std::cout << "Send op notifed!!!" << std::endl;
+        this->AcceleratorsAgent::LeaveTraceFromRemote(this->rank, trace, nullptr, std::nullopt);
+    }
+    void LeaveTraceFromRemote__with_issuing_id(Trace trace,
+            IssuingID hint_issuing_id) {
+        std::cout << "Send op notifed!!!" << std::endl;
+        this->AcceleratorsAgent::LeaveTraceFromRemote(this->rank, trace, nullptr, hint_issuing_id);
+    }
+
+    void WithdrawActions(IssuingID issuing_id) {
+        this->AcceleratorsAgent::WithdrawActions(this->rank, issuing_id);
+    }
+    void EnqueueActions(std::optional<IssuingID> issuing_id,
+            std::vector<std::shared_ptr<AccActionSpec>> &action_specs,
+            std::vector<std::string> jsoned_params);
+
+    virtual void SendPayload(std::shared_ptr<struct TransmitInfo> transmit_info,
+            std::shared_ptr<RegPayload> payload) {
+#ifndef NDEBUG
+        std::cout << "Send! I'm rank[" << this->rank << "] "
+                  << "TransmitID[" << transmit_info->transmit_id << "] "
+                  << std::endl;
+#endif
+
+        auto send_tensor = [&] (c10::IValue &iv) {
+            if (iv.isTensor()) {
+                std::vector<at::Tensor> tensors = {iv.toTensor()};
+                this->pg->send(tensors,
+                        transmit_info->recv_rank, transmit_info->transmit_id);
+            }
+        };
+        for_each_leaf__of_tuple_tree(*payload, send_tensor);
+
+#ifndef NDEBUG
+        std::cout << "Send done! I'm rank[" << this->rank << "] "
+                  << "TransmitID[" << transmit_info->transmit_id << "] "
+                  << std::endl;
+#endif
+    }
+    virtual void RecvPayload(std::shared_ptr<struct TransmitInfo> transmit_info,
+            std::shared_ptr<RegPayload> allocated_payload) {
+#ifndef NDEBUG
+        std::cout << "Recv! I'm rank[" << this->rank << "] "
+                  << "TransmitID[" << transmit_info->transmit_id << "] "
+                  << std::endl;
+#endif
+
+        auto &profiling_data = transmit_info->param_to_master->profiling;
+        auto recv_tensor = [&] (c10::IValue &iv) {
+            if (iv.isTensor()) {
+                Timestamp start = RealTimeNow();
+                std::vector<at::Tensor> tensors = {iv.toTensor()};
+                this->pg->recv(tensors,
+                        transmit_info->send_rank, transmit_info->transmit_id);
+                Timestamp end = RealTimeNow();
+                profiling_data.push_back({iv.toTensor().numel() * iv.toTensor().element_size(),
+                                         end - start});
+            }
+        };
+        for_each_leaf__of_tuple_tree(*allocated_payload, recv_tensor);
+
+#ifndef NDEBUG
+        std::cout << "Recv done! I'm rank[" << this->rank << "] "
+                  << "TransmitID[" << transmit_info->transmit_id << "] "
+                  << std::endl;
+#endif
+    }
+
+private:
+    Rank rank;
+
+    ray::ActorHandle<MasterActor> master_actor;
+    std::unordered_map<Rank, ray::ActorHandle<AcceleratorActor>> acchandler_cache;
+
+    std::shared_ptr<c10d::Backend> pg;
+};
+RAY_REMOTE(&AcceleratorActor::PermitThisRecvs);
+RAY_REMOTE(&AcceleratorActor::LeaveTraceFromRemote__with_issuing_id);
+RAY_REMOTE(&AcceleratorActor::LeaveTraceFromRemote__without_issuing_id);
+RAY_REMOTE(&AcceleratorActor::WithdrawActions);
+RAY_REMOTE(&AcceleratorActor::EnqueueActions);
+
+
+class MasterActor final: public Cluster {
+public:
+    MasterActor(std::shared_ptr<Master> m, Rank rank, std::string master_ip, size_t world_size) {
+        this->rank = rank;
+        this->master_ip = master_ip;
+        this->world_size = world_size;
+        this->me = std::shared_ptr<Cluster>(this);
+        this->cluster_sys = std::make_shared<ClusterSys>(this->me, m);
+        this->cluster_sys->StartUp();
+    }
+
+    virtual void StartUp() override {
+        //init_TorchDist(this->master_ip, this->world_size, this->rank);
+    }
+
+    size_t GetWorldSize() {return this->world_size;}
+    std::string GetMasterIp() {return this->master_ip;}
+
+
+#define DEF_MASTER_EVENT_INTERFACE__FOR_ACC(e) \
+    void SendAccEvent_ ## e ( \
+            Rank from, \
+            std::optional<IssuingID> issuing_id, \
+            Timestamp acc_timestamp, \
+            std::shared_ptr<struct e> param) { \
+        this->SendAccEvent_ToMaster(from, issuing_id, acc_timestamp, e, param); \
+    }
+
+FOR_EACH_MASTER_EVENT__BY_ACC(DEF_MASTER_EVENT_INTERFACE__FOR_ACC)
+#undef DEF_MASTER_EVENT_INTERFACE__FOR_ACC
+
+
+#define DEF_MASTER_EVENT_INTERFACE__FOR_WATCHDOG(e) \
+    void SendWatchdogEvent_ ## e (std::shared_ptr<struct e> param) { \
+        this->SendWatchdogEvent_ToMaster(e, param); \
+    }
+
+FOR_EACH_MASTER_EVENT__BY_WATCHDOG(DEF_MASTER_EVENT_INTERFACE__FOR_WATCHDOG)
+#undef DEF_MASTER_EVENT_INTERFACE__FOR_WATCHDOG
+
+
+    // Called by Master to handle the cluster
+    virtual void IssueActions(Rank,
+            std::optional<IssuingID>,
+            std::vector<std::shared_ptr<AccActionSpec>> &) override;
+    virtual void PermitRecvs(Rank,
+            std::vector<std::shared_ptr<TransmitSpec>> &) override;
+    virtual void WithdrawActions(Rank, IssuingID) override;
+
+private:
+    std::shared_ptr<Cluster> me;
+    std::shared_ptr<ClusterSys> cluster_sys;
+
+    std::unordered_map<Rank, ray::ActorHandle<AcceleratorActor>> acchandler_cache;
+
+    Rank rank;
+    std::string master_ip;
+    size_t world_size;
+};
+RAY_REMOTE(&MasterActor::GetWorldSize);
+RAY_REMOTE(&MasterActor::GetMasterIp);
+RAY_REMOTE(&MasterActor::SendWatchdogEvent_WatchdogSignAccIn);
+RAY_REMOTE(&MasterActor::SendWatchdogEvent_WatchdogSignAccOut);
+RAY_REMOTE(&MasterActor::SendAccEvent_AccReportNodeDone);
+RAY_REMOTE(&MasterActor::SendAccEvent_AccRequestSend);
+RAY_REMOTE(&MasterActor::SendAccEvent_AccReportRecvDone);
+
+
+static std::string
+get_master_actor_name() {
+    return "GCGMaster";
+}
+
+inline static ray::ActorHandle<MasterActor>
+get_master_actorhandler() {
+    auto _master_actor = ray::GetActor<MasterActor>(get_master_actor_name());
+    if (!_master_actor.has_value()) {
+        exit(-1);
+    }
+    return _master_actor.get();
+}
+
+static std::string
+get_acc_actor_name(Rank rank) {
+    std::stringstream actor_name;
+    actor_name << "GCGAccRank[" << rank << "]";
+    return actor_name.str();
+}
+
+inline static ray::ActorHandle<AcceleratorActor> &
+get_acc_actorhandler(
+        std::unordered_map<Rank, ray::ActorHandle<AcceleratorActor>> &acchandler_cache,
+        Rank rank) {
+    if (!acchandler_cache.contains(rank)) {
+        auto _acc_actor = ray::GetActor<AcceleratorActor>(get_acc_actor_name(rank));
+        if (!_acc_actor.has_value()) {
+            exit(-1);
+        }
+        acchandler_cache[rank] = _acc_actor.get();
+    }
+    return acchandler_cache[rank];
+}
+
+
+void
+MasterActor::IssueActions(Rank rank,
+        std::optional<IssuingID> issuing_id,
+        std::vector<std::shared_ptr<AccActionSpec>> &action_specs) {
+    std::vector<std::string> jsoned_params;
+    for (size_t i = 0; i < action_specs.size(); i++) {
+        switch(action_specs[i]->op_enum) {
+#define ACC_Action_CASE(a) \
+            case a: { \
+                auto param = std::static_pointer_cast<struct a>(action_specs[i]->op_param); \
+                nlohmann::json jsoned_param = *param; \
+                jsoned_params.push_back(jsoned_param.dump()); \
+                break; \
+            }
+
+FOR_EACH_ACC_ACTION(ACC_Action_CASE)
+#undef ACC_Action_CASE
+        }
+    }
+
+    auto &acc_handler = get_acc_actorhandler(this->acchandler_cache, rank);
+    acc_handler.Task(&AcceleratorActor::EnqueueActions).Remote(issuing_id, action_specs, jsoned_params);
+}
+
+void
+MasterActor::PermitRecvs(Rank recv,
+        std::vector<std::shared_ptr<TransmitSpec>> &trans_specs) {
+    auto &acc_handler = get_acc_actorhandler(this->acchandler_cache, recv);
+    acc_handler.Task(&AcceleratorActor::PermitThisRecvs).Remote(trans_specs);
+}
+
+void
+MasterActor::WithdrawActions(Rank, IssuingID) {
+    assert(0);
+}
+
+
+
+#include <cuda_runtime.h>
+#define gpuErrchk(ans) { gpuAssert((ans), __FILE__, __LINE__); }
+inline void gpuAssert(cudaError_t code, const char *file, int line, bool abort=true) {
+   if (code != cudaSuccess) {
+      fprintf(stderr,"GPUassert: %s %s %d\n", cudaGetErrorString(code), file, line);
+      if (abort) exit(code);
+   }
+}
+
+AcceleratorActor::AcceleratorActor(Rank rank,
+        StreamID nr_streams,
+        HostID host_id,
+        int local_device_id,
+        std::string dev_str,
+        int dev_idx) {
+    c10::Device dev(dev_str);
+    c10::DeviceType type = dev.type();
+    auto acc = std::make_shared<Accelerator>(
+            GetSimpleOOQueue(nr_streams), host_id, dev_str, "", local_device_id, rank, type, dev_idx);
+
+    this->AddAccelerator(rank, acc);
+    this->rank = rank;
+    this->AcceleratorsAgent::StartUp();
+
+    this->master_actor = get_master_actorhandler();
+
+    std::string master_ip = *(ray::Get(
+                this->master_actor.Task(&MasterActor::GetMasterIp).Remote()));
+    size_t world_size = *(ray::Get(
+                this->master_actor.Task(&MasterActor::GetWorldSize).Remote()));
+    this->pg = init_TorchDist(master_ip, world_size, this->rank);
+
+    extern OOQueueActionRet
+        transmit_recv_for_raycluster(std::vector<std::shared_ptr<RegPayload>> &inputs,
+                std::shared_ptr<TracePayload> trace_payload,
+                std::shared_ptr<AccActionParamPayload> param_,
+                std::optional<IssuingID> issuing_id,
+                Accelerator* acc);
+    extern void
+        transmit_recv_for_raycluster__bottomhalf(std::shared_ptr<InfoToBottomHalf> info_,
+                std::optional<IssuingID> issuing_id,
+                Accelerator *acc);
+    extern OOQueueActionRet
+        transmit_send_for_raycluster(std::vector<std::shared_ptr<RegPayload>> &inputs,
+                std::shared_ptr<TracePayload> trace_payload,
+                std::shared_ptr<AccActionParamPayload> param_,
+                std::optional<IssuingID> issuing_id,
+                Accelerator* acc);
+
+    acc->OverrideActionFun(Transmit_Recv,
+            transmit_recv_for_raycluster, transmit_recv_for_raycluster__bottomhalf);
+    acc->OverrideActionFun(Transmit_Send, transmit_send_for_raycluster);
+
+
+    auto param = std::make_shared<struct WatchdogSignAccIn>();
+
+
+    if (dev_str.compare("cuda") == 0) {
+        extern OOQueueActionRet
+            init_cuda_aten_runtime_for_raycluster(std::vector<std::shared_ptr<RegPayload>> &inputs,
+                    std::shared_ptr<TracePayload> trace_payload,
+                    std::shared_ptr<AccActionParamPayload> param_,
+                    std::optional<IssuingID> issuing_id,
+                    Accelerator *acc);
+
+        acc->OverrideActionFun(InitATenRuntime, init_cuda_aten_runtime_for_raycluster);
+
+        param->compute_unit = 1;
+        param->never_signout = 1; // for debug
+
+        std::stringstream ss;
+        ss << "cuda:" << dev_idx;
+        param->acc_name = ss.str();
+
+        cudaDeviceProp cuda_prop;
+        gpuErrchk(cudaGetDeviceProperties(&cuda_prop, dev_idx));
+        param->acc_model = cuda_prop.name;
+    } else
+        assert(0);
+
+    param->resource = dev_str;
+    param->host_id = host_id;
+    param->local_device_id = local_device_id;
+    param->rank = rank;
+
+    this->SendEventToMaster(rank, WatchdogSignAccIn, std::nullopt, param);
+}
+
+void
+AcceleratorActor::SendEventToMaster(Rank from,
+        MasterEventEnum e,
+        std::optional<IssuingID> issuing_id,
+        std::shared_ptr<MasterEventParamPayload> param) {
+    switch(e) {
+#define MASTER_AccEVENT__CASE(e) \
+        case e: this->master_actor.Task(&MasterActor::SendAccEvent_ ## e) \
+                                  .Remote(from, issuing_id, RealTimeNow(), \
+                                          std::static_pointer_cast<struct e>(param)); \
+        break;
+
+FOR_EACH_MASTER_EVENT__BY_ACC(MASTER_AccEVENT__CASE)
+#undef MASTER_AccEVENT__CASE
+
+#define MASTER_WatchdogEVENT__CASE(e) \
+        case e: this->master_actor.Task(&MasterActor::SendWatchdogEvent_ ## e) \
+                                  .Remote(std::static_pointer_cast<struct e>(param)); \
+        break;
+
+FOR_EACH_MASTER_EVENT__BY_WATCHDOG(MASTER_WatchdogEVENT__CASE)
+#undef MASTER_WatchdogEVENT__CASE
+    }
+}
+
+void
+AcceleratorActor::SendTraceToRemoteAccelerator(Rank to,
+        Trace trace,
+        std::shared_ptr<TracePayload> trace_payload,
+        std::optional<IssuingID> hint_issuing_id) {
+    assert(trace_payload == nullptr);
+    auto &acc_handler = get_acc_actorhandler(this->acchandler_cache, to);
+    if (hint_issuing_id.has_value())
+        acc_handler.Task(&AcceleratorActor::LeaveTraceFromRemote__with_issuing_id).Remote(trace, hint_issuing_id.value());
+    else
+        acc_handler.Task(&AcceleratorActor::LeaveTraceFromRemote__without_issuing_id).Remote(trace);
+}
+
+void
+AcceleratorActor::EnqueueActions(std::optional<IssuingID> issuing_id,
+        std::vector<std::shared_ptr<AccActionSpec>> &action_specs,
+        std::vector<std::string> jsoned_params) {
+#ifndef NDEBUG
+    for (size_t i = 0; i < jsoned_params.size(); i++) {
+        std::cout << jsoned_params[i] << std::endl;
+    }
+#endif
+    for (size_t i = 0; i < action_specs.size(); i++) {
+        switch(action_specs[i]->op_enum) {
+#define ACC_Action_CASE(a) \
+            case a: \
+                action_specs[i]->op_param = \
+                std::make_shared<struct a>( \
+                        nlohmann::json::parse(jsoned_params[i]) \
+                        .get<struct a>()); \
+                break;
+
+FOR_EACH_ACC_ACTION(ACC_Action_CASE)
+#undef ACC_Action_CASE
+        }
+    }
+    this->AcceleratorsAgent::EnqueueActions(this->rank, issuing_id, action_specs);
+}
+
+
+static AcceleratorActor *
+Create_AcceleratorActor_for_RayCluster(
+        Rank rank,
+        StreamID nr_streams,
+        HostID host_id,
+        int local_device_id,
+        std::string dev_str,
+        int dev_idx) {
+    return new AcceleratorActor(rank, nr_streams, host_id, local_device_id, dev_str, dev_idx);
+}
+RAY_REMOTE(Create_AcceleratorActor_for_RayCluster);
+
+
+// https://stackoverflow.com/questions/478898/how-do-i-execute-a-command-and-get-the-output-of-the-command-within-c-using-po
+static std::string
+exec(const char* cmd) {
+    std::array<char, 128> buffer;
+    std::string result;
+    std::unique_ptr<FILE, void(*)(FILE*)> pipe(popen(cmd, "r"),
+            [](FILE * f) -> void {
+            // wrapper to ignore the return value from pclose() is needed with newer versions of gnu g++
+            std::ignore = pclose(f);
+            });
+    if (!pipe) {
+        throw std::runtime_error("popen() failed!");
+    }
+    while (fgets(buffer.data(), static_cast<int>(buffer.size()), pipe.get()) != nullptr) {
+        result += buffer.data();
+    }
+    return result;
+}
+
+#include <json.hpp>
+
+
+std::unordered_set<std::string> supported_resource = {"GPU"};
+
+std::string jsoned_ray_nodes;
+
+static const std::string &
+get_jsonsed_ray_nodes() {
+    static int inited = 0;
+    if (inited)
+        return jsoned_ray_nodes;
+    inited = 1;
+    jsoned_ray_nodes = exec("ray list nodes --format json");
+    return jsoned_ray_nodes;
+}
+
+static void
+for_head_node(
+        std::function<void (std::string head_node_id,
+            std::string head_node_ip,
+            std::string head_node_resource_name)> callback) {
+    auto nodes = nlohmann::json::parse(get_jsonsed_ray_nodes());
+
+    std::regex is_host("^node:\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$");
+
+    for (size_t i = 0; i < nodes.size(); i++) {
+        auto node = nodes[i];
+        if (!(node["is_head_node"].get<bool>()))
+            continue;
+
+        auto node_id = node["node_id"].get<std::string>();
+
+        std::string node_resource_name;
+
+        auto resources = node["resources_total"];
+        for (auto &[key, _]: resources.items()) {
+            if (std::regex_match(key, is_host)) {
+                node_resource_name = key;
+                break;
+            }
+        }
+
+        callback(node["node_id"].get<std::string>(),
+                node["node_ip"].get<std::string>(),
+                node_resource_name);
+        break;
+    }
+}
+
+static void
+for_each_alive_node__and__resource(
+        std::function<void (std::string node_id,
+            std::string node_resource_name,
+            std::string resource_type,
+            double nr_resources)> callback) {
+    auto nodes = nlohmann::json::parse(get_jsonsed_ray_nodes());
+
+    std::regex is_host("^node:\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$");
+
+    for (size_t i = 0; i < nodes.size(); i++) {
+        auto node = nodes[i];
+        if (node["state"].get<std::string>().compare("ALIVE") != 0)
+            continue;
+        auto node_id = node["node_id"].get<std::string>();
+
+        std::string node_resource_name;
+
+        auto resources = node["resources_total"];
+        for (auto &[key, _]: resources.items()) {
+            if (std::regex_match(key, is_host)) {
+                node_resource_name = key;
+                break;
+            }
+        }
+
+        for (auto resource: supported_resource) {
+            if (resources.contains(resource))
+                callback(node_id, node_resource_name, resource, resources[resource].get<double>());
+        }
+    }
+}
+
+static void
+Create_Accs_Actor(StreamID nr_streams) {
+    std::unordered_map<std::string, HostID> nodes;
+    Rank cur_rank = 0; // 0 for master
+    auto new_acc_actor = [&] (
+            std::string node_id,
+            std::string node_resource_name,
+            std::string resource_type,
+            double nr_resources) {
+        if (!nodes.contains(node_id))
+            nodes[node_id] = nodes.size();
+        HostID host_id = nodes[node_id];
+
+        for (size_t dev_idx = 0; dev_idx < nr_resources; dev_idx++) {
+            Rank rank;
+            std::string resource;
+            int local_device_id;
+            std::string dev_str;
+            int dev_dx;
+
+            rank = cur_rank++;
+            if (resource_type.compare("GPU") == 0)
+                dev_str = "cuda";
+            else
+                assert(0);
+            local_device_id = dev_idx;
+
+#ifndef NDEBUG
+            std::cout << "Rank[" << rank << "] "
+                      << "host_id[" << host_id << "] "
+                      << "node_name[" << node_resource_name << "] "
+                      << "resource[" << resource_type << "] "
+                      << "dev_idx[" << dev_idx << "] "
+                      << std::endl;
+#endif
+
+//            auto runtime_env = ray::RuntimeEnv();
+//
+//#ifndef NDEBUG
+//            runtime_env.Set("NCCL_DEBUG", "INFO");
+//            runtime_env.Set("NCCL_DEBUG_SUBSYS", "INIT,P2P,NET,COLL,GRAPH");
+//#endif
+
+            ray::Actor(Create_AcceleratorActor_for_RayCluster)
+                .SetName(get_acc_actor_name(rank))
+                .SetResource(resource_type, 1.0)
+                .SetResource(node_resource_name, 0.000001)
+                //.SetRuntimeEnv(runtime_env)
+                .Remote(rank, nr_streams, host_id, local_device_id, dev_str, dev_idx);
+        }
+    };
+    for_each_alive_node__and__resource(new_acc_actor);
+}
+
+template<typename T, typename... Args> static void
+Create_Master_Actor(T MasterActor_Creator, Args... args) {
+    auto master_actor_creator = [&] (std::string head_node_id,
+            std::string head_node_ip,
+            std::string head_node_resource_name) {
+        size_t rank_of_master = 0;
+        size_t world_size = 0; // one for master
+        auto world_size_counter = [&] (std::string node_id,
+                std::string node_resource_name,
+                std::string resource_type,
+                double nr_resources) {
+            world_size += nr_resources;
+        };
+        for_each_alive_node__and__resource(world_size_counter);
+
+        std::cout << "Rank[" << rank_of_master << "] "
+                  << "MasterIP[" << head_node_ip << "] "
+                  << "WorldSize[" << world_size << "] "
+                  << std::endl;
+
+        ray::Actor(MasterActor_Creator)
+            .SetName(get_master_actor_name())
+            .SetResource(head_node_resource_name, 0.000001)
+            .Remote(rank_of_master, head_node_ip, world_size, args...);
+    };
+    for_head_node(master_actor_creator);
+}
+
+
+
+#include "Master/Master.h"
+
+static MasterActor *
+HelloWorldMaster_ActorCreator(Rank rank, std::string master_ip, size_t world_size) {
+    return new MasterActor(GetHelloWorldMaster(), rank, master_ip, world_size);
+}
+RAY_REMOTE(HelloWorldMaster_ActorCreator);
+
+void
+Init_HelloWorld_RayCluster() {
+    Create_Master_Actor(HelloWorldMaster_ActorCreator);
+    Create_Accs_Actor(NR_STREAM);
+}
+
+
+static MasterActor *
+SingleAccGraphMaster_ActorCreator(Rank rank, std::string master_ip, size_t world_size) {
+    return new MasterActor(GetSingleAccGraphMaster(), rank, master_ip, world_size);
+}
+RAY_REMOTE(SingleAccGraphMaster_ActorCreator);
+
+void
+Init_SingleAccGraph_RayCluster() {
+    Create_Master_Actor(SingleAccGraphMaster_ActorCreator);
+    Create_Accs_Actor(NR_STREAM);
+}
+
+
+static MasterActor *
+TransmitTestMaster_ActorCreator(Rank rank, std::string master_ip, size_t world_size) {
+    return new MasterActor(GetTransmitTestMaster(), rank, master_ip, world_size);
+}
+RAY_REMOTE(TransmitTestMaster_ActorCreator);
+
+void
+Init_TransmitTest_RayCluster() {
+    Create_Master_Actor(TransmitTestMaster_ActorCreator);
+    Create_Accs_Actor(NR_STREAM);
+}
+
+
+static MasterActor *
+HTTPedMiniGCGMaster_ActorCreator(Rank rank, std::string master_ip, size_t world_size, int port) {
+    return new MasterActor(WrapHTTPedMaster(GetMiniGCGMaster(), port), rank, master_ip, world_size);
+}
+RAY_REMOTE(HTTPedMiniGCGMaster_ActorCreator);
+
+void
+Init_HTTPedMiniGCGMaster_RayCluster(int port) {
+    Create_Master_Actor(HTTPedMiniGCGMaster_ActorCreator, port);
+    Create_Accs_Actor(NR_STREAM);
+}
+
+static MasterActor *
+HTTPedBigLockGCGMaster_ActorCreator(Rank rank, std::string master_ip, size_t world_size, int port) {
+    return new MasterActor(WrapHTTPedMaster(GetBigLockMaster(), port), rank, master_ip, world_size);
+}
+RAY_REMOTE(HTTPedBigLockGCGMaster_ActorCreator);
+
+void
+Init_HTTPedBigLockGCGMaster_RayCluster(int port) {
+    Create_Master_Actor(HTTPedBigLockGCGMaster_ActorCreator, port);
+    Create_Accs_Actor(NR_STREAM);
+}
+

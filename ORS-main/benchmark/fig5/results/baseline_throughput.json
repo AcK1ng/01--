@@ -1,0 +1,38 @@
+{
+  "system": "PyTorch_Baseline",
+  "benchmark": "Decode_Throughput",
+  "data": {
+    "batch_1": {
+      "1": {
+        "throughput_req_s": 52.75
+      },
+      "4": {
+        "throughput_req_s": 54.22
+      },
+      "16": {
+        "throughput_req_s": 54.18
+      },
+      "32": {
+        "throughput_req_s": 54.02
+      },
+      "64": {
+        "throughput_req_s": 54.17
+      },
+      "128": {
+        "throughput_req_s": 53.96
+      },
+      "512": {
+        "throughput_req_s": 53.81
+      },
+      "1024": {
+        "throughput_req_s": 53.07
+      },
+      "2048": {
+        "throughput_req_s": 53.74
+      },
+      "4096": {
+        "throughput_req_s": 53.47
+      }
+    }
+  }
+}

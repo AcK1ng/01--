@@ -1,0 +1,109 @@
+graph(%merged_state : (Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-2), SS(-3))),
+      %merged_state.61 : (Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-3)), Float(SS(-5), SS(-3))),
+      %merged_state.59 : (Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3))),
+      %merged_state.57 : (Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3))),
+      %merged_state.55 : (Float(SS(-5), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-4), SS(-3))),
+      %merged_state.53 : (Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3))),
+      %merged_state.51 : (Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3))),
+      %merged_state.49 : (Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3))),
+      %merged_state.47 : (Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3))),
+      %merged_state.45 : (Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3))),
+      %merged_state.43 : (Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3))),
+      %merged_state.41 : (Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3)), Float(SS(-3), SS(-3))),
+      %merged_state.39 : (Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-4), SS(-3)), Float(SS(-3))),
+      %merged_state.37 : (Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3), SS(-3)), Float(SS(-3))),
+      %merged_state.35 : (Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3)), Float(SS(-3), SS(-3))),
+      %merged_state.33 : (Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-3))),
+      %merged_state.31 : (Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3))),
+      %merged_state.29 : (Float(SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-5))),
+      %merged_state.27 : (Float(SS(-3)), Float(SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3))),
+      %merged_state.25 : (Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-4), SS(-3))),
+      %merged_state.23 : (Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-4), SS(-3))),
+      %merged_state.21 : (Float(SS(-5), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3))),
+      %merged_state.19 : (Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3))),
+      %merged_state.17 : (Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-5), SS(-3))),
+      %merged_state.15 : (Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3))),
+      %merged_state.13 : (Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-5))),
+      %merged_state.11 : (Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3))),
+      %merged_state.9 : (Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3)), Float(SS(-3))),
+      %merged_state.7 : (Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-3))),
+      %merged_state.5 : (Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3))),
+      %merged_state.3 : (Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-5))),
+      %merged_state.1 : (Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3), SS(-3))),
+      %p_model_tok_embeddings_weight : Float(SS(-2), SS(-3)),
+      %c_model_freqs_cis : ComplexFloat(SS(-6), SS(-7)),
+      %c_lifted_tensor_0 : Float(),
+      %kvs_l0 : Float(2, 16384, 8, 128),
+      %kvs_l1 : Float(2, 16384, 8, 128),
+      %kvs_l2 : Float(2, 16384, 8, 128),
+      %kvs_l3 : Float(2, 16384, 8, 128),
+      %kvs_l4 : Float(2, 16384, 8, 128),
+      %kvs_l5 : Float(2, 16384, 8, 128),
+      %kvs_l6 : Float(2, 16384, 8, 128),
+      %kvs_l7 : Float(2, 16384, 8, 128),
+      %kvs_l8 : Float(2, 16384, 8, 128),
+      %kvs_l9 : Float(2, 16384, 8, 128),
+      %kvs_l10 : Float(2, 16384, 8, 128),
+      %kvs_l11 : Float(2, 16384, 8, 128),
+      %kvs_l12 : Float(2, 16384, 8, 128),
+      %kvs_l13 : Float(2, 16384, 8, 128),
+      %kvs_l14 : Float(2, 16384, 8, 128),
+      %kvs_l15 : Float(2, 16384, 8, 128),
+      %kvs_l16 : Float(2, 16384, 8, 128),
+      %kvs_l17 : Float(2, 16384, 8, 128),
+      %kvs_l18 : Float(2, 16384, 8, 128),
+      %kvs_l19 : Float(2, 16384, 8, 128),
+      %kvs_l20 : Float(2, 16384, 8, 128),
+      %kvs_l21 : Float(2, 16384, 8, 128),
+      %kvs_l22 : Float(2, 16384, 8, 128),
+      %kvs_l23 : Float(2, 16384, 8, 128),
+      %kvs_l24 : Float(2, 16384, 8, 128),
+      %kvs_l25 : Float(2, 16384, 8, 128),
+      %kvs_l26 : Float(2, 16384, 8, 128),
+      %kvs_l27 : Float(2, 16384, 8, 128),
+      %kvs_l28 : Float(2, 16384, 8, 128),
+      %kvs_l29 : Float(2, 16384, 8, 128),
+      %kvs_l30 : Float(2, 16384, 8, 128),
+      %kvs_l31 : Float(2, 16384, 8, 128),
+      %tokens : Long(1, SS(-8)),
+      %dummy_tensor__for__start_pos : Float(SS(-9))):
+  %815 : int = prim::Constant[value=0]()
+  %816 : int = prim::Constant[value=1]()
+  %327 : ((Float(1, SS(-8), SS(-3)), Float(1, SS(-8), SS(-3))), (SymInt, ComplexFloat(SS(-8), SS(-7)), SymInt, SymInt, Float(SS(-8), SS(-17)))) = prim::GCG_Call_Submod[target="submod_initial_partial"](%tokens, %dummy_tensor__for__start_pos, %p_model_tok_embeddings_weight, %c_model_freqs_cis)
+  %701 : (SymInt, ComplexFloat(SS(-8), SS(-7)), SymInt, SymInt, Float(SS(-8), SS(-17))) = prim::TupleIndex(%327, %816)
+  %638 : (Float(1, SS(-8), SS(-3)), Float(1, SS(-8), SS(-3))) = prim::TupleIndex(%327, %815)
+  %574 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_0_"](%kvs_l0, %merged_state.1, %638, %701)
+  %576 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_1_"](%kvs_l1, %merged_state.3, %574, %701)
+  %578 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_2_"](%kvs_l2, %merged_state.5, %576, %701)
+  %580 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_3_"](%kvs_l3, %merged_state.7, %701, %578)
+  %582 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_4_"](%kvs_l4, %merged_state.9, %701, %580)
+  %584 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_5_"](%kvs_l5, %merged_state.11, %582, %701)
+  %586 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_6_"](%kvs_l6, %merged_state.13, %701, %584)
+  %588 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_7_"](%kvs_l7, %merged_state.15, %586, %701)
+  %590 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_8_"](%kvs_l8, %merged_state.17, %588, %701)
+  %592 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_9_"](%kvs_l9, %merged_state.19, %590, %701)
+  %594 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_10_"](%kvs_l10, %merged_state.21, %592, %701)
+  %596 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_11_"](%kvs_l11, %merged_state.23, %594, %701)
+  %598 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_12_"](%kvs_l12, %merged_state.25, %596, %701)
+  %600 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_13_"](%kvs_l13, %merged_state.27, %598, %701)
+  %602 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_14_"](%kvs_l14, %merged_state.29, %701, %600)
+  %604 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_15_"](%kvs_l15, %merged_state.31, %701, %602)
+  %606 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_16_"](%kvs_l16, %merged_state.33, %604, %701)
+  %608 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_17_"](%kvs_l17, %merged_state.35, %606, %701)
+  %610 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_18_"](%kvs_l18, %merged_state.37, %701, %608)
+  %612 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_19_"](%kvs_l19, %merged_state.39, %701, %610)
+  %614 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_20_"](%kvs_l20, %merged_state.41, %612, %701)
+  %616 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_21_"](%kvs_l21, %merged_state.43, %614, %701)
+  %618 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_22_"](%kvs_l22, %merged_state.45, %616, %701)
+  %620 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_23_"](%kvs_l23, %merged_state.47, %701, %618)
+  %622 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_24_"](%kvs_l24, %merged_state.49, %620, %701)
+  %624 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_25_"](%kvs_l25, %merged_state.51, %701, %622)
+  %626 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_26_"](%kvs_l26, %merged_state.53, %701, %624)
+  %628 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_27_"](%kvs_l27, %merged_state.55, %701, %626)
+  %630 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_28_"](%kvs_l28, %merged_state.57, %628, %701)
+  %632 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_29_"](%kvs_l29, %merged_state.59, %630, %701)
+  %634 : (Float(1, SS(-8), 4096), Float(1, SS(-8), 4096)) = prim::GCG_Call_Submod[target="submod_p_model_layers_30_"](%kvs_l30, %merged_state.61, %632, %701)
+  %636 : (Long(1, 1), Float(SS(-17))) = prim::GCG_Call_Submod[target="submod_p_model_layers_31_"](%kvs_l31, %c_lifted_tensor_0, %merged_state, %634, %701)
+  %569 : Long(1, 1) = prim::TupleIndex(%636, %815)
+  %572 : Float(SS(-17)) = prim::TupleIndex(%636, %816)
+  return (%569, %572)

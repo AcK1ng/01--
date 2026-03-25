@@ -1,0 +1,39 @@
+[2023-08-16 07:40:06,338] [INFO] [real_accelerator.py:133:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+
+===================================BUG REPORT===================================
+Welcome to bitsandbytes. For bug reports, please run
+
+python -m bitsandbytes
+
+ and submit this information together with your error trace to: https://github.com/TimDettmers/bitsandbytes/issues
+================================================================================
+bin /home/tricorder/yang/anaconda3/envs/llama2_test/lib/python3.10/site-packages/bitsandbytes/libbitsandbytes_cuda117.so
+CUDA_SETUP: WARNING! libcudart.so not found in any environmental path. Searching in backup paths...
+CUDA SETUP: CUDA runtime path found: /usr/local/cuda/lib64/libcudart.so
+CUDA SETUP: Highest compute capability among GPUs detected: 8.0
+CUDA SETUP: Detected CUDA version 117
+CUDA SETUP: Loading binary /home/tricorder/yang/anaconda3/envs/llama2_test/lib/python3.10/site-packages/bitsandbytes/libbitsandbytes_cuda117.so...
+[2023-08-16 07:40:07,563] [WARNING] [runner.py:196:fetch_hostfile] Unable to find hostfile, will proceed with training with local resources only.
+[2023-08-16 07:40:07,563] [INFO] [runner.py:555:main] cmd = /home/tricorder/yang/anaconda3/envs/llama2_test/bin/python -u -m deepspeed.launcher.launch --world_info=eyJsb2NhbGhvc3QiOiBbMF19 --master_addr=127.0.0.1 --master_port=29510 --enable_each_rank_log=None finetune_clm_lora.py --model_name_or_path meta-llama/Llama-2-7b-chat-hf --train_files ../../data/train_sft.csv --validation_files ../../data/dev_sft.csv --per_device_train_batch_size 1 --per_device_eval_batch_size 1 --do_train --do_eval --use_fast_tokenizer false --output_dir ../model/Llama2-Chinese-7b-Chat --evaluation_strategy steps --max_eval_samples 800 --learning_rate 1e-4 --gradient_accumulation_steps 16 --num_train_epochs 10 --warmup_steps 400 --load_in_bits 4 --lora_r 8 --lora_alpha 32 --target_modules q_proj,k_proj,v_proj,o_proj,down_proj,gate_proj,up_proj --logging_dir ../model/Llama2-Chinese-7b-Chat/logs --logging_strategy steps --logging_steps 10 --save_strategy steps --preprocessing_num_workers 10 --save_steps 200 --eval_steps 200 --save_total_limit 2000 --seed 42 --disable_tqdm false --ddp_find_unused_parameters false --block_size 4096 --report_to tensorboard --overwrite_output_dir --deepspeed ds_config_zero2.json --ignore_data_skip true --bf16 --gradient_checkpointing --bf16_full_eval --ddp_timeout 18000000
+[2023-08-16 07:40:09,337] [INFO] [real_accelerator.py:133:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+
+===================================BUG REPORT===================================
+Welcome to bitsandbytes. For bug reports, please run
+
+python -m bitsandbytes
+
+ and submit this information together with your error trace to: https://github.com/TimDettmers/bitsandbytes/issues
+================================================================================
+bin /home/tricorder/yang/anaconda3/envs/llama2_test/lib/python3.10/site-packages/bitsandbytes/libbitsandbytes_cuda117.so
+CUDA_SETUP: WARNING! libcudart.so not found in any environmental path. Searching in backup paths...
+CUDA SETUP: CUDA runtime path found: /usr/local/cuda/lib64/libcudart.so.11.0
+CUDA SETUP: Highest compute capability among GPUs detected: 8.0
+CUDA SETUP: Detected CUDA version 117
+CUDA SETUP: Loading binary /home/tricorder/yang/anaconda3/envs/llama2_test/lib/python3.10/site-packages/bitsandbytes/libbitsandbytes_cuda117.so...
+[2023-08-16 07:40:10,543] [INFO] [launch.py:145:main] WORLD INFO DICT: {'localhost': [0]}
+[2023-08-16 07:40:10,543] [INFO] [launch.py:151:main] nnodes=1, num_local_procs=1, node_rank=0
+[2023-08-16 07:40:10,543] [INFO] [launch.py:162:main] global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0]})
+[2023-08-16 07:40:10,543] [INFO] [launch.py:163:main] dist_world_size=1
+[2023-08-16 07:40:10,543] [INFO] [launch.py:165:main] Setting CUDA_VISIBLE_DEVICES=0
+[2023-08-16 07:40:11,545] [INFO] [launch.py:315:sigkill_handler] Killing subprocess 3963634
+[2023-08-16 07:40:11,545] [ERROR] [launch.py:321:sigkill_handler] ['/home/tricorder/yang/anaconda3/envs/llama2_test/bin/python', '-u', 'finetune_clm_lora.py', '--local_rank=0', '--model_name_or_path', 'meta-llama/Llama-2-7b-chat-hf', '--train_files', '../../data/train_sft.csv', '--validation_files', '../../data/dev_sft.csv', '--per_device_train_batch_size', '1', '--per_device_eval_batch_size', '1', '--do_train', '--do_eval', '--use_fast_tokenizer', 'false', '--output_dir', '../model/Llama2-Chinese-7b-Chat', '--evaluation_strategy', 'steps', '--max_eval_samples', '800', '--learning_rate', '1e-4', '--gradient_accumulation_steps', '16', '--num_train_epochs', '10', '--warmup_steps', '400', '--load_in_bits', '4', '--lora_r', '8', '--lora_alpha', '32', '--target_modules', 'q_proj,k_proj,v_proj,o_proj,down_proj,gate_proj,up_proj', '--logging_dir', '../model/Llama2-Chinese-7b-Chat/logs', '--logging_strategy', 'steps', '--logging_steps', '10', '--save_strategy', 'steps', '--preprocessing_num_workers', '10', '--save_steps', '200', '--eval_steps', '200', '--save_total_limit', '2000', '--seed', '42', '--disable_tqdm', 'false', '--ddp_find_unused_parameters', 'false', '--block_size', '4096', '--report_to', 'tensorboard', '--overwrite_output_dir', '--deepspeed', 'ds_config_zero2.json', '--ignore_data_skip', 'true', '--bf16', '--gradient_checkpointing', '--bf16_full_eval', '--ddp_timeout', '18000000'] exits with return code = 2

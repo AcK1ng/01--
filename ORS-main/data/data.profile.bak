@@ -1,0 +1,578 @@
+[
+	{
+		"device_latency" : 
+		{
+			"1" : 29,
+			"2" : 30
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 47,
+		"op_name" : "prim::Return"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 93,
+			"2" : 68
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : false,
+		"model_id" : "testModel",
+		"op_id" : 45,
+		"op_name" : "aten::mse_loss"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 49,
+			"2" : 41
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 44,
+		"op_name" : "aten::addmm"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 88,
+			"2" : 69
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : false,
+		"model_id" : "testModel",
+		"op_id" : 42,
+		"op_name" : "aten::addmm"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 26,
+			"2" : 24
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 40,
+		"op_name" : "aten::reshape"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 25,
+			"2" : 14
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 38,
+		"op_name" : "prim::TupleIndex"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 15,
+			"2" : 14
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 28,
+		"op_name" : "prim::TupleConstruct"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 47,
+			"2" : 43
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 27,
+		"op_name" : "aten::max_pool2d_with_indices"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 226,
+			"2" : 199
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : false,
+		"model_id" : "testModel",
+		"op_id" : 26,
+		"op_name" : "aten::convolution"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 12,
+			"2" : 11
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 39,
+		"op_name" : "prim::ListConstruct"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 15,
+			"2" : 14
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 25,
+		"op_name" : "prim::TupleIndex"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 17,
+			"2" : 16
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 16,
+		"op_name" : "prim::TupleIndex"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 16,
+			"2" : 17
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 14,
+		"op_name" : "prim::TupleIndex"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 20,
+			"2" : 22
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 12,
+		"op_name" : "prim::TupleConstruct"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 18,
+			"2" : 21
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 11,
+		"op_name" : "prim::TupleConstruct"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 83,
+			"2" : 73
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : false,
+		"model_id" : "testModel",
+		"op_id" : 10,
+		"op_name" : "aten::max_pool2d_with_indices"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 15,
+			"2" : 19
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 43,
+		"op_name" : "aten::t"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 24,
+			"2" : 28
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 41,
+		"op_name" : "aten::t"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 193,
+			"2" : 188
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : false,
+		"model_id" : "testModel",
+		"op_id" : 8,
+		"op_name" : "aten::convolution"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 12,
+			"2" : 15
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 37,
+		"op_name" : "prim::TupleIndex"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 12,
+			"2" : 15
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 36,
+		"op_name" : "prim::TupleIndex"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 15,
+			"2" : 20
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 35,
+		"op_name" : "prim::TupleIndex"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 24,
+			"2" : 18
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 34,
+		"op_name" : "prim::TupleIndex"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 10,
+			"2" : 16
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 24,
+		"op_name" : "prim::TupleIndex"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 12,
+			"2" : 16
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 23,
+		"op_name" : "prim::TupleIndex"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 14,
+			"2" : 18
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 9,
+		"op_name" : "aten::sym_size"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 14,
+			"2" : 20
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 7,
+		"op_name" : "prim::TupleIndex"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 15,
+			"2" : 20
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 6,
+		"op_name" : "prim::TupleIndex"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 39,
+			"2" : 50
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 46,
+		"op_name" : "prim::Param"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 9,
+			"2" : 10
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 33,
+		"op_name" : "prim::Constant"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 9,
+			"2" : 9
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 32,
+		"op_name" : "prim::Constant"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 16,
+			"2" : 15
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 31,
+		"op_name" : "prim::Constant"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 9,
+			"2" : 8
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 30,
+		"op_name" : "prim::Constant"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 10,
+			"2" : 9
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 29,
+		"op_name" : "prim::Constant"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 9,
+			"2" : 10
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 22,
+		"op_name" : "prim::Constant"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 9,
+			"2" : 8
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 21,
+		"op_name" : "prim::Constant"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 10,
+			"2" : 8
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 20,
+		"op_name" : "prim::Constant"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 12,
+			"2" : 9
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 19,
+		"op_name" : "prim::Constant"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 10,
+			"2" : 28
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 18,
+		"op_name" : "prim::Constant"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 26,
+			"2" : 10
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 17,
+		"op_name" : "prim::Constant"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 9,
+			"2" : 8
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 15,
+		"op_name" : "prim::Constant"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 9,
+			"2" : 7
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 13,
+		"op_name" : "prim::Constant"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 10,
+			"2" : 7
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 5,
+		"op_name" : "prim::Constant"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 9,
+			"2" : 7
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 4,
+		"op_name" : "prim::Constant"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 11,
+			"2" : 8
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 3,
+		"op_name" : "prim::Constant"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 12,
+			"2" : 9
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 2,
+		"op_name" : "prim::Constant"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 11,
+			"2" : 7
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 1,
+		"op_name" : "prim::Constant"
+	},
+	{
+		"device_latency" : 
+		{
+			"1" : 40,
+			"2" : 17
+		},
+		"expected_device" : 1,
+		"is_memory_intensive" : true,
+		"model_id" : "testModel",
+		"op_id" : 0,
+		"op_name" : "prim::Constant"
+	}
+]

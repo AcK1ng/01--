@@ -1,0 +1,29 @@
+graph(%merged_state : (Float(10), Float(150), Float(10, 150), Float(150, 360)),
+      %merged_state.3 : (Float(40), Float(40, 20, 5, 5)),
+      %merged_state.1 : (Float(20, 1, 4, 4), Float(20)),
+      %tangent0 : Float(),
+      %primals_9 : Float(SS(-2), 1, 29, 29),
+      %primals_10 : Float(SS(-2), 10)):
+  %141 : int = prim::Constant[value=1]()
+  %142 : int = prim::Constant[value=0]()
+  %143 : int = prim::Constant[value=2]()
+  %92 : ((Float(SS(-2), 20, 13, 13), Long(SS(-2), 20, 13, 13)), int, Float(SS(-2), 20, 26, 26)) = prim::GCG_Call_Submod[target="submod_fw0"](%primals_9, %merged_state.1)
+  %14 : (Float(SS(-2), 20, 13, 13), Long(SS(-2), 20, 13, 13)) = prim::TupleIndex(%92, %142)
+  %17 : int = prim::TupleIndex(%92, %141)
+  %20 : Float(SS(-2), 20, 26, 26) = prim::TupleIndex(%92, %143)
+  %96 : ((Float(SS(-2), 40, 3, 3), Long(SS(-2), 40, 3, 3)), Long(SS(-2), 20, 13, 13), (Float(SS(-2), 40, 9, 9), Float(SS(-2), 20, 13, 13))) = prim::GCG_Call_Submod[target="submod_fw1"](%14, %merged_state.3)
+  %105 : (Float(SS(-2), 40, 9, 9), Float(SS(-2), 20, 13, 13)) = prim::TupleIndex(%96, %143)
+  %24 : (Float(SS(-2), 40, 3, 3), Long(SS(-2), 40, 3, 3)) = prim::TupleIndex(%96, %142)
+  %33 : Long(SS(-2), 20, 13, 13) = prim::TupleIndex(%96, %141)
+  %100 : (Long(SS(-2), 40, 3, 3), Float(), (Float(SS(-2), 10), Float(150, 10), Float(SS(-2), 150), Float(360, 150), Float(SS(-2), 360))) = prim::GCG_Call_Submod[target="submod_fw2"](%24, %17, %primals_10, %merged_state)
+  %102 : (Float(SS(-2), 10), Float(150, 10), Float(SS(-2), 150), Float(360, 150), Float(SS(-2), 360)) = prim::TupleIndex(%100, %143)
+  %52 : Long(SS(-2), 40, 3, 3) = prim::TupleIndex(%100, %142)
+  %55 : Float() = prim::TupleIndex(%100, %141)
+  %99 : (Float(SS(-2), 40, 3, 3), (Float(10), Float(150), Float(10, 150), Float(150, 360))) = prim::GCG_Call_Submod[target="submod_bw2"](%tangent0, %primals_10, %17, %merged_state, %102)
+  %59 : Float(SS(-2), 40, 3, 3) = prim::TupleIndex(%99, %142)
+  %95 : (Float(SS(-2), 20, 13, 13), (Float(40), Float(40, 20, 5, 5))) = prim::GCG_Call_Submod[target="submod_bw1"](%59, %52, %merged_state.3, %105)
+  %75 : Float(SS(-2), 20, 13, 13) = prim::TupleIndex(%95, %142)
+  %91 : (Float(20, 1, 4, 4), Float(20)) = prim::GCG_Call_Submod[target="submod_bw0"](%75, %20, %33, %primals_9, %merged_state.1)
+  %110 : (Float(40), Float(40, 20, 5, 5)) = prim::TupleIndex(%95, %141)
+  %112 : (Float(10), Float(150), Float(10, 150), Float(150, 360)) = prim::TupleIndex(%99, %141)
+  return (%112, %110, %91, %55)

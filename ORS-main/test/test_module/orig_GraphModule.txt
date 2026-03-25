@@ -1,0 +1,71 @@
+graph():
+    %primals_1 : [num_users=3] = placeholder[target=primals_1]
+    %primals_2 : [num_users=2] = placeholder[target=primals_2]
+    %primals_3 : [num_users=3] = placeholder[target=primals_3]
+    %primals_4 : [num_users=2] = placeholder[target=primals_4]
+    %primals_5 : [num_users=2] = placeholder[target=primals_5]
+    %primals_6 : [num_users=2] = placeholder[target=primals_6]
+    %primals_7 : [num_users=2] = placeholder[target=primals_7]
+    %primals_8 : [num_users=2] = placeholder[target=primals_8]
+    %tangent0 : [num_users=1] = placeholder[target=tangent0]
+    %primals_9 : [num_users=3] = placeholder[target=primals_9]
+    %primals_10 : [num_users=2] = placeholder[target=primals_10]
+    %convolution : [num_users=2] = call_function[target=torch.ops.aten.convolution.default](args = (%primals_9, %primals_1, %primals_2, [1, 1], [0, 0], [1, 1], False, [0, 0], 1), kwargs = {})
+    %sym_size_int : [num_users=2] = call_function[target=torch.ops.aten.sym_size.int](args = (%primals_9, 0), kwargs = {})
+    %max_pool2d_with_indices : [num_users=2] = call_function[target=torch.ops.aten.max_pool2d_with_indices.default](args = (%convolution, [2, 2], [2, 2]), kwargs = {})
+    %getitem : [num_users=2] = call_function[target=operator.getitem](args = (%max_pool2d_with_indices, 0), kwargs = {})
+    %getitem_1 : [num_users=1] = call_function[target=operator.getitem](args = (%max_pool2d_with_indices, 1), kwargs = {})
+    %convolution_1 : [num_users=2] = call_function[target=torch.ops.aten.convolution.default](args = (%getitem, %primals_3, %primals_4, [1, 1], [0, 0], [1, 1], False, [0, 0], 1), kwargs = {})
+    %max_pool2d_with_indices_1 : [num_users=2] = call_function[target=torch.ops.aten.max_pool2d_with_indices.default](args = (%convolution_1, [3, 3], [3, 3]), kwargs = {})
+    %getitem_2 : [num_users=1] = call_function[target=operator.getitem](args = (%max_pool2d_with_indices_1, 0), kwargs = {})
+    %getitem_3 : [num_users=1] = call_function[target=operator.getitem](args = (%max_pool2d_with_indices_1, 1), kwargs = {})
+    %view : [num_users=2] = call_function[target=torch.ops.aten.view.default](args = (%getitem_2, [%sym_size_int, 360]), kwargs = {})
+    %t : [num_users=2] = call_function[target=torch.ops.aten.t.default](args = (%primals_5,), kwargs = {})
+    %addmm : [num_users=2] = call_function[target=torch.ops.aten.addmm.default](args = (%primals_6, %view, %t), kwargs = {})
+    %t_1 : [num_users=2] = call_function[target=torch.ops.aten.t.default](args = (%primals_7,), kwargs = {})
+    %addmm_1 : [num_users=2] = call_function[target=torch.ops.aten.addmm.default](args = (%primals_8, %addmm, %t_1), kwargs = {})
+    %mse_loss : [num_users=1] = call_function[target=torch.ops.aten.mse_loss.default](args = (%addmm_1, %primals_10), kwargs = {})
+    %mse_loss_backward : [num_users=3] = call_function[target=torch.ops.aten.mse_loss_backward.default](args = (%tangent0, %addmm_1, %primals_10, 1), kwargs = {})
+    %t_2 : [num_users=1] = call_function[target=torch.ops.aten.t.default](args = (%t_1,), kwargs = {})
+    %mm : [num_users=3] = call_function[target=torch.ops.aten.mm.default](args = (%mse_loss_backward, %t_2), kwargs = {})
+    %t_3 : [num_users=1] = call_function[target=torch.ops.aten.t.default](args = (%mse_loss_backward,), kwargs = {})
+    %mm_1 : [num_users=1] = call_function[target=torch.ops.aten.mm.default](args = (%t_3, %addmm), kwargs = {})
+    %t_4 : [num_users=1] = call_function[target=torch.ops.aten.t.default](args = (%mm_1,), kwargs = {})
+    %sum_1 : [num_users=1] = call_function[target=torch.ops.aten.sum.dim_IntList](args = (%mse_loss_backward, [0], True), kwargs = {})
+    %view_1 : [num_users=1] = call_function[target=torch.ops.aten.view.default](args = (%sum_1, [10]), kwargs = {})
+    %mul_30 : [num_users=1] = call_function[target=torch.ops.aten.mul](args = (%view_1, -0.01), kwargs = {})
+    %add_46 : [num_users=1] = call_function[target=torch.ops.aten.add](args = (%primals_8, %mul_30), kwargs = {})
+    %t_5 : [num_users=1] = call_function[target=torch.ops.aten.t.default](args = (%t_4,), kwargs = {})
+    %mul_29 : [num_users=1] = call_function[target=torch.ops.aten.mul](args = (%t_5, -0.01), kwargs = {})
+    %add_45 : [num_users=1] = call_function[target=torch.ops.aten.add](args = (%primals_7, %mul_29), kwargs = {})
+    %t_6 : [num_users=1] = call_function[target=torch.ops.aten.t.default](args = (%t,), kwargs = {})
+    %mm_2 : [num_users=1] = call_function[target=torch.ops.aten.mm.default](args = (%mm, %t_6), kwargs = {})
+    %t_7 : [num_users=1] = call_function[target=torch.ops.aten.t.default](args = (%mm,), kwargs = {})
+    %mm_3 : [num_users=1] = call_function[target=torch.ops.aten.mm.default](args = (%t_7, %view), kwargs = {})
+    %t_8 : [num_users=1] = call_function[target=torch.ops.aten.t.default](args = (%mm_3,), kwargs = {})
+    %sum_2 : [num_users=1] = call_function[target=torch.ops.aten.sum.dim_IntList](args = (%mm, [0], True), kwargs = {})
+    %view_2 : [num_users=1] = call_function[target=torch.ops.aten.view.default](args = (%sum_2, [150]), kwargs = {})
+    %mul_28 : [num_users=1] = call_function[target=torch.ops.aten.mul](args = (%view_2, -0.01), kwargs = {})
+    %add_44 : [num_users=1] = call_function[target=torch.ops.aten.add](args = (%primals_6, %mul_28), kwargs = {})
+    %t_9 : [num_users=1] = call_function[target=torch.ops.aten.t.default](args = (%t_8,), kwargs = {})
+    %mul_27 : [num_users=1] = call_function[target=torch.ops.aten.mul](args = (%t_9, -0.01), kwargs = {})
+    %add_43 : [num_users=1] = call_function[target=torch.ops.aten.add](args = (%primals_5, %mul_27), kwargs = {})
+    %view_3 : [num_users=1] = call_function[target=torch.ops.aten.view.default](args = (%mm_2, [%sym_size_int, 40, 3, 3]), kwargs = {})
+    %max_pool2d_with_indices_backward : [num_users=1] = call_function[target=torch.ops.aten.max_pool2d_with_indices_backward.default](args = (%view_3, %convolution_1, [3, 3], [3, 3], [0, 0], [1, 1], False, %getitem_3), kwargs = {})
+    %convolution_backward : [num_users=3] = call_function[target=torch.ops.aten.convolution_backward.default](args = (%max_pool2d_with_indices_backward, %getitem, %primals_3, [40], [1, 1], [0, 0], [1, 1], False, [0, 0], 1, [True, True, True]), kwargs = {})
+    %getitem_4 : [num_users=1] = call_function[target=operator.getitem](args = (%convolution_backward, 0), kwargs = {})
+    %getitem_5 : [num_users=1] = call_function[target=operator.getitem](args = (%convolution_backward, 1), kwargs = {})
+    %mul_25 : [num_users=1] = call_function[target=torch.ops.aten.mul](args = (%getitem_5, -0.01), kwargs = {})
+    %add_41 : [num_users=1] = call_function[target=torch.ops.aten.add](args = (%primals_3, %mul_25), kwargs = {})
+    %getitem_6 : [num_users=1] = call_function[target=operator.getitem](args = (%convolution_backward, 2), kwargs = {})
+    %mul_26 : [num_users=1] = call_function[target=torch.ops.aten.mul](args = (%getitem_6, -0.01), kwargs = {})
+    %add_42 : [num_users=1] = call_function[target=torch.ops.aten.add](args = (%primals_4, %mul_26), kwargs = {})
+    %max_pool2d_with_indices_backward_1 : [num_users=1] = call_function[target=torch.ops.aten.max_pool2d_with_indices_backward.default](args = (%getitem_4, %convolution, [2, 2], [2, 2], [0, 0], [1, 1], False, %getitem_1), kwargs = {})
+    %convolution_backward_1 : [num_users=2] = call_function[target=torch.ops.aten.convolution_backward.default](args = (%max_pool2d_with_indices_backward_1, %primals_9, %primals_1, [20], [1, 1], [0, 0], [1, 1], False, [0, 0], 1, [False, True, True]), kwargs = {})
+    %getitem_8 : [num_users=1] = call_function[target=operator.getitem](args = (%convolution_backward_1, 1), kwargs = {})
+    %mul_23 : [num_users=1] = call_function[target=torch.ops.aten.mul](args = (%getitem_8, -0.01), kwargs = {})
+    %add_39 : [num_users=1] = call_function[target=torch.ops.aten.add](args = (%primals_1, %mul_23), kwargs = {})
+    %getitem_9 : [num_users=1] = call_function[target=operator.getitem](args = (%convolution_backward_1, 2), kwargs = {})
+    %mul_24 : [num_users=1] = call_function[target=torch.ops.aten.mul](args = (%getitem_9, -0.01), kwargs = {})
+    %add_40 : [num_users=1] = call_function[target=torch.ops.aten.add](args = (%primals_2, %mul_24), kwargs = {})
+    return [add_39, add_40, add_41, add_42, add_43, add_44, add_45, add_46, mse_loss]

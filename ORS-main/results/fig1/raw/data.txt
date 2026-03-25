@@ -1,0 +1,2 @@
+original-cpu original-gpu 1cpu 1gpu 3cpu 3gpu 1cpu+1gpu
+2557.32 7632.27 942.428 866.149 1339.03 997.853 904.441

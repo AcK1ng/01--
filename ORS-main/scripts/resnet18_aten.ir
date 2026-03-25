@@ -1,0 +1,113 @@
+graph(%self : __torch__.torchvision.models.resnet.___torch_mangle_25.ResNet,
+      %x.1 : Tensor):
+  %2 : int[] = prim::Constant[value=[0, 0]]()
+  %3 : int[] = prim::Constant[value=[1, 1]]()
+  %4 : int[] = prim::Constant[value=[3, 3]]()
+  %5 : int[] = prim::Constant[value=[2, 2]]()
+  %6 : int = prim::Constant[value=-1]()
+  %7 : int = prim::Constant[value=1]() # /usr/local/lib/python3.10/dist-packages/torchvision/models/resnet.py:279:29
+  %8 : int = prim::Constant[value=2]() # /usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py:549:33
+  %9 : str = prim::Constant[value="AssertionError: "]()
+  %self.fc.bias : Float(1000, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.fc.weight : Float(1000, 512, strides=[512, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.bn1.training : bool = prim::Constant[value=0]()
+  %self.conv1.bias : NoneType = prim::Constant()
+  %self.conv1.weight_fused_bn : Float(64, 3, 7, 7, strides=[147, 49, 7, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.conv1.bias_fused_bn.1 : Float(64, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %x.5 : Tensor = aten::conv2d(%x.1, %self.conv1.weight_fused_bn, %self.conv1.bias_fused_bn.1, %5, %4, %3, %7) # /usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py:548:15
+  %x.13 : Tensor = aten::relu_(%x.5) # /usr/local/lib/python3.10/dist-packages/torch/nn/functional.py:1719:17
+  %x.17 : Tensor = aten::max_pool2d(%x.13, %4, %5, %3, %3, %self.bn1.training) # /usr/local/lib/python3.10/dist-packages/torch/nn/functional.py:833:11
+  %self.layer1.0.conv1.weight_fused_bn : Float(64, 64, 3, 3, strides=[576, 9, 3, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.conv1.bias_fused_bn.3 : Float(64, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %out.3 : Tensor = aten::conv2d(%x.17, %self.layer1.0.conv1.weight_fused_bn, %self.conv1.bias_fused_bn.3, %3, %3, %3, %7) # /usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py:548:15
+  %out.11 : Tensor = aten::relu_(%out.3) # /usr/local/lib/python3.10/dist-packages/torch/nn/functional.py:1719:17
+  %self.layer1.0.conv2.weight_fused_bn : Float(64, 64, 3, 3, strides=[576, 9, 3, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.conv1.bias_fused_bn.5 : Float(64, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %out.15 : Tensor = aten::conv2d(%out.11, %self.layer1.0.conv2.weight_fused_bn, %self.conv1.bias_fused_bn.5, %3, %3, %3, %7) # /usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py:548:15
+  %out.23 : Tensor = aten::add_(%out.15, %x.17, %7) # /usr/local/lib/python3.10/dist-packages/torchvision/models/resnet.py:102:8
+  %input.8 : Tensor = aten::relu_(%out.23) # /usr/local/lib/python3.10/dist-packages/torch/nn/functional.py:1719:17
+  %self.layer1.1.conv1.weight_fused_bn : Float(64, 64, 3, 3, strides=[576, 9, 3, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.conv1.bias_fused_bn.7 : Float(64, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %out.25 : Tensor = aten::conv2d(%input.8, %self.layer1.1.conv1.weight_fused_bn, %self.conv1.bias_fused_bn.7, %3, %3, %3, %7) # /usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py:548:15
+  %out.29 : Tensor = aten::relu_(%out.25) # /usr/local/lib/python3.10/dist-packages/torch/nn/functional.py:1719:17
+  %self.layer1.1.conv2.weight_fused_bn : Float(64, 64, 3, 3, strides=[576, 9, 3, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.conv1.bias_fused_bn.9 : Float(64, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %out.31 : Tensor = aten::conv2d(%out.29, %self.layer1.1.conv2.weight_fused_bn, %self.conv1.bias_fused_bn.9, %3, %3, %3, %7) # /usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py:548:15
+  %out.35 : Tensor = aten::add_(%out.31, %input.8, %7) # /usr/local/lib/python3.10/dist-packages/torchvision/models/resnet.py:102:8
+  %x.21 : Tensor = aten::relu_(%out.35) # /usr/local/lib/python3.10/dist-packages/torch/nn/functional.py:1719:17
+  %self.layer2.0.conv1.weight_fused_bn : Float(128, 64, 3, 3, strides=[576, 9, 3, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.conv1.bias_fused_bn.11 : Float(128, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %out.37 : Tensor = aten::conv2d(%x.21, %self.layer2.0.conv1.weight_fused_bn, %self.conv1.bias_fused_bn.11, %5, %3, %3, %7) # /usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py:548:15
+  %out.41 : Tensor = aten::relu_(%out.37) # /usr/local/lib/python3.10/dist-packages/torch/nn/functional.py:1719:17
+  %self.layer2.0.conv2.weight_fused_bn : Float(128, 128, 3, 3, strides=[1152, 9, 3, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.conv1.bias_fused_bn.13 : Float(128, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %out.43 : Tensor = aten::conv2d(%out.41, %self.layer2.0.conv2.weight_fused_bn, %self.conv1.bias_fused_bn.13, %3, %3, %3, %7) # /usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py:548:15
+  %self.layer2.0.downsample.0.weight_fused_bn : Float(128, 64, 1, 1, strides=[64, 1, 1, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.conv1.bias_fused_bn.15 : Float(128, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %input.10 : Tensor = aten::conv2d(%x.21, %self.layer2.0.downsample.0.weight_fused_bn, %self.conv1.bias_fused_bn.15, %5, %2, %3, %7) # /usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py:548:15
+  %out.47 : Tensor = aten::add_(%out.43, %input.10, %7) # /usr/local/lib/python3.10/dist-packages/torchvision/models/resnet.py:102:8
+  %input.12 : Tensor = aten::relu_(%out.47) # /usr/local/lib/python3.10/dist-packages/torch/nn/functional.py:1719:17
+  %self.layer2.1.conv1.weight_fused_bn : Float(128, 128, 3, 3, strides=[1152, 9, 3, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.conv1.bias_fused_bn.17 : Float(128, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %out.49 : Tensor = aten::conv2d(%input.12, %self.layer2.1.conv1.weight_fused_bn, %self.conv1.bias_fused_bn.17, %3, %3, %3, %7) # /usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py:548:15
+  %out.53 : Tensor = aten::relu_(%out.49) # /usr/local/lib/python3.10/dist-packages/torch/nn/functional.py:1719:17
+  %self.layer2.1.conv2.weight_fused_bn : Float(128, 128, 3, 3, strides=[1152, 9, 3, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.conv1.bias_fused_bn.19 : Float(128, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %out.55 : Tensor = aten::conv2d(%out.53, %self.layer2.1.conv2.weight_fused_bn, %self.conv1.bias_fused_bn.19, %3, %3, %3, %7) # /usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py:548:15
+  %out.59 : Tensor = aten::add_(%out.55, %input.12, %7) # /usr/local/lib/python3.10/dist-packages/torchvision/models/resnet.py:102:8
+  %x.25 : Tensor = aten::relu_(%out.59) # /usr/local/lib/python3.10/dist-packages/torch/nn/functional.py:1719:17
+  %self.layer3.0.conv1.weight_fused_bn : Float(256, 128, 3, 3, strides=[1152, 9, 3, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.conv1.bias_fused_bn.21 : Float(256, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %out.61 : Tensor = aten::conv2d(%x.25, %self.layer3.0.conv1.weight_fused_bn, %self.conv1.bias_fused_bn.21, %5, %3, %3, %7) # /usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py:548:15
+  %out.65 : Tensor = aten::relu_(%out.61) # /usr/local/lib/python3.10/dist-packages/torch/nn/functional.py:1719:17
+  %self.layer3.0.conv2.weight_fused_bn : Float(256, 256, 3, 3, strides=[2304, 9, 3, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.conv1.bias_fused_bn.23 : Float(256, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %out.67 : Tensor = aten::conv2d(%out.65, %self.layer3.0.conv2.weight_fused_bn, %self.conv1.bias_fused_bn.23, %3, %3, %3, %7) # /usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py:548:15
+  %self.layer3.0.downsample.0.weight_fused_bn : Float(256, 128, 1, 1, strides=[128, 1, 1, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.conv1.bias_fused_bn.25 : Float(256, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %input.14 : Tensor = aten::conv2d(%x.25, %self.layer3.0.downsample.0.weight_fused_bn, %self.conv1.bias_fused_bn.25, %5, %2, %3, %7) # /usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py:548:15
+  %out.71 : Tensor = aten::add_(%out.67, %input.14, %7) # /usr/local/lib/python3.10/dist-packages/torchvision/models/resnet.py:102:8
+  %input.16 : Tensor = aten::relu_(%out.71) # /usr/local/lib/python3.10/dist-packages/torch/nn/functional.py:1719:17
+  %self.layer3.1.conv1.weight_fused_bn : Float(256, 256, 3, 3, strides=[2304, 9, 3, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.conv1.bias_fused_bn.27 : Float(256, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %out.73 : Tensor = aten::conv2d(%input.16, %self.layer3.1.conv1.weight_fused_bn, %self.conv1.bias_fused_bn.27, %3, %3, %3, %7) # /usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py:548:15
+  %out.77 : Tensor = aten::relu_(%out.73) # /usr/local/lib/python3.10/dist-packages/torch/nn/functional.py:1719:17
+  %self.layer3.1.conv2.weight_fused_bn : Float(256, 256, 3, 3, strides=[2304, 9, 3, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.conv1.bias_fused_bn.29 : Float(256, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %out.79 : Tensor = aten::conv2d(%out.77, %self.layer3.1.conv2.weight_fused_bn, %self.conv1.bias_fused_bn.29, %3, %3, %3, %7) # /usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py:548:15
+  %out.83 : Tensor = aten::add_(%out.79, %input.16, %7) # /usr/local/lib/python3.10/dist-packages/torchvision/models/resnet.py:102:8
+  %x.29 : Tensor = aten::relu_(%out.83) # /usr/local/lib/python3.10/dist-packages/torch/nn/functional.py:1719:17
+  %self.layer4.0.conv1.weight_fused_bn : Float(512, 256, 3, 3, strides=[2304, 9, 3, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.conv1.bias_fused_bn.31 : Float(512, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %out.2 : Tensor = aten::conv2d(%x.29, %self.layer4.0.conv1.weight_fused_bn, %self.conv1.bias_fused_bn.31, %5, %3, %3, %7) # /usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py:548:15
+  %out.10 : Tensor = aten::relu_(%out.2) # /usr/local/lib/python3.10/dist-packages/torch/nn/functional.py:1719:17
+  %self.layer4.0.conv2.weight_fused_bn : Float(512, 512, 3, 3, strides=[4608, 9, 3, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.conv1.bias_fused_bn.33 : Float(512, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %out.14 : Tensor = aten::conv2d(%out.10, %self.layer4.0.conv2.weight_fused_bn, %self.conv1.bias_fused_bn.33, %3, %3, %3, %7) # /usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py:548:15
+  %self.layer4.0.downsample.0.weight_fused_bn : Float(512, 256, 1, 1, strides=[256, 1, 1, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.conv1.bias_fused_bn.35 : Float(512, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %input.5 : Tensor = aten::conv2d(%x.29, %self.layer4.0.downsample.0.weight_fused_bn, %self.conv1.bias_fused_bn.35, %5, %2, %3, %7) # /usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py:548:15
+  %out.22 : Tensor = aten::add_(%out.14, %input.5, %7) # /usr/local/lib/python3.10/dist-packages/torchvision/models/resnet.py:102:8
+  %input.6 : Tensor = aten::relu_(%out.22) # /usr/local/lib/python3.10/dist-packages/torch/nn/functional.py:1719:17
+  %self.layer4.1.conv1.weight_fused_bn : Float(512, 512, 3, 3, strides=[4608, 9, 3, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.conv1.bias_fused_bn.37 : Float(512, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %out.1 : Tensor = aten::conv2d(%input.6, %self.layer4.1.conv1.weight_fused_bn, %self.conv1.bias_fused_bn.37, %3, %3, %3, %7) # /usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py:548:15
+  %out.9 : Tensor = aten::relu_(%out.1) # /usr/local/lib/python3.10/dist-packages/torch/nn/functional.py:1719:17
+  %self.layer4.1.conv2.weight_fused_bn : Float(512, 512, 3, 3, strides=[4608, 9, 3, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.conv1.bias_fused_bn : Float(512, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %out.13 : Tensor = aten::conv2d(%out.9, %self.layer4.1.conv2.weight_fused_bn, %self.conv1.bias_fused_bn, %3, %3, %3, %7) # /usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py:548:15
+  %out.21 : Tensor = aten::add_(%out.13, %input.6, %7) # /usr/local/lib/python3.10/dist-packages/torchvision/models/resnet.py:102:8
+  %x.33 : Tensor = aten::relu_(%out.21) # /usr/local/lib/python3.10/dist-packages/torch/nn/functional.py:1719:17
+  %100 : int[] = aten::size(%x.33) # /usr/local/lib/python3.10/dist-packages/torch/nn/functional.py:1396:51
+  %101 : int = aten::len(%100) # <string>:5:9
+  %102 : bool = aten::gt(%101, %8) # <string>:5:9
+   = prim::If(%102) # <string>:5:2
+    block0():
+      -> ()
+    block1():
+       = prim::RaiseException(%9, %self.conv1.bias) # <string>:5:2
+      -> ()
+  %x.37 : Tensor = aten::adaptive_avg_pool2d(%x.33, %3) # /usr/local/lib/python3.10/dist-packages/torch/nn/functional.py:1397:11
+  %x.41 : Tensor = aten::flatten(%x.37, %7, %6) # /usr/local/lib/python3.10/dist-packages/torchvision/models/resnet.py:279:12
+  %x.45 : Tensor = aten::linear(%x.41, %self.fc.weight, %self.fc.bias) # /usr/local/lib/python3.10/dist-packages/torch/nn/modules/linear.py:134:15
+  return (%x.45)

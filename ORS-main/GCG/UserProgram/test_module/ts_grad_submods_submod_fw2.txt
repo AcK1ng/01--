@@ -1,0 +1,25 @@
+graph(%max_pool2d_with_indices_1 : (Float(SS(-2), 40, 3, 3), Long(SS(-2), 40, 3, 3)),
+      %sym_size_int : int,
+      %primals_10 : Float(SS(-2), 10),
+      %merged_state : (Float(150), Float(10, 150), Float(10), Float(150, 360))):
+  %4 : int = prim::Constant[value=3]()
+  %5 : int = prim::Constant[value=2]()
+  %6 : int = prim::Constant[value=1]()
+  %7 : int = prim::Constant[value=0]()
+  %8 : int = prim::Constant[value=360]()
+  %9 : Float(150, 360) = prim::TupleIndex(%merged_state, %4)
+  %10 : Float(10) = prim::TupleIndex(%merged_state, %5)
+  %11 : Float(10, 150) = prim::TupleIndex(%merged_state, %6)
+  %12 : Float(150) = prim::TupleIndex(%merged_state, %7)
+  %13 : Float(SS(-5), 40, 3, 3) = prim::TupleIndex(%max_pool2d_with_indices_1, %7)
+  %14 : Long(SS(-2), 40, 3, 3) = prim::TupleIndex(%max_pool2d_with_indices_1, %6)
+  %15 : int[] = prim::ListConstruct(%sym_size_int, %8)
+  %16 : Float(SS(-2), 360) = aten::reshape(%13, %15)
+  %17 : Float(360, 150) = aten::t(%9)
+  %18 : Float(SS(-2), 150) = aten::addmm(%12, %16, %17, %6, %6)
+  %19 : Float(150, 10) = aten::t(%11)
+  %20 : Float(SS(-2), 10) = aten::addmm(%10, %18, %19, %6, %6)
+  %21 : Float() = aten::mse_loss(%20, %primals_10, %6)
+  %22 : (Float(SS(-2), 10), Float(150, 10), Float(SS(-2), 150), Float(360, 150), Float(SS(-2), 360)) = prim::TupleConstruct(%20, %19, %18, %17, %16)
+  %23 : (Long(SS(-2), 40, 3, 3), Float(), (Float(SS(-2), 10), Float(150, 10), Float(SS(-2), 150), Float(360, 150), Float(SS(-2), 360))) = prim::TupleConstruct(%14, %21, %22)
+  return (%23)

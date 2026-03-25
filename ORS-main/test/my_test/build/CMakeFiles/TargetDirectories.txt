@@ -1,0 +1,3 @@
+/home/wangyulong/ORS/test/my_test/build/CMakeFiles/verify_scheme.dir
+/home/wangyulong/ORS/test/my_test/build/CMakeFiles/edit_cache.dir
+/home/wangyulong/ORS/test/my_test/build/CMakeFiles/rebuild_cache.dir

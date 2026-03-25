@@ -1,0 +1,29 @@
+graph(%getitem_4 : Float(SS(-2), 20, 13, 13),
+      %convolution : Float(SS(-2), 20, 26, 26),
+      %getitem_1 : Long(SS(-2), 20, 13, 13),
+      %primals_9 : Float(SS(-2), 1, 29, 29),
+      %merged_state : (Float(20, 1, 4, 4), Float(20))):
+  %5 : int = prim::Constant[value=1]()
+  %6 : int = prim::Constant[value=0]()
+  %7 : int = prim::Constant[value=2]()
+  %8 : int[] = prim::Constant[value=[2, 2]]()
+  %9 : int[] = prim::Constant[value=[0, 0]]()
+  %10 : int[] = prim::Constant[value=[1, 1]]()
+  %11 : bool = prim::Constant[value=0]()
+  %12 : int[] = prim::Constant[value=[20]]()
+  %13 : bool = prim::Constant[value=1]()
+  %14 : float = prim::Constant[value=-0.01]()
+  %15 : Float(20) = prim::TupleIndex(%merged_state, %5)
+  %16 : Float(20, 1, 4, 4) = prim::TupleIndex(%merged_state, %6)
+  %17 : Float(SS(-8), 20, 26, 26) = aten::max_pool2d_with_indices_backward(%getitem_4, %convolution, %8, %8, %9, %10, %11, %getitem_1)
+  %18 : bool[] = prim::ListConstruct(%11, %13, %13)
+  %19 : Tensor, %20 : Float(20, 1, 4, 4), %21 : Float(20) = aten::convolution_backward(%17, %primals_9, %16, %12, %10, %9, %10, %11, %9, %5, %18)
+  %22 : (Tensor, Float(20, 1, 4, 4), Float(20)) = prim::TupleConstruct(%19, %20, %21)
+  %23 : Float(20, 1, 4, 4) = prim::TupleIndex(%22, %5)
+  %24 : Float(20, 1, 4, 4) = aten::mul(%23, %14)
+  %25 : Float(20, 1, 4, 4) = aten::add(%16, %24, %5)
+  %26 : Float(20) = prim::TupleIndex(%22, %7)
+  %27 : Float(20) = aten::mul(%26, %14)
+  %28 : Float(20) = aten::add(%15, %27, %5)
+  %29 : (Float(20, 1, 4, 4), Float(20)) = prim::TupleConstruct(%25, %28)
+  return (%29)

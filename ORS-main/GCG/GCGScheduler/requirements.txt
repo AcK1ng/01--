@@ -1,0 +1,8 @@
+ray[cpp]
+graphviz
+transformers
+sentencepiece
+MonkeyType # 用torchscript的example_inputs做输入类型annotation用
+plotnine
+tiktoken
+pybind11

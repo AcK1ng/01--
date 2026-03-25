@@ -1,0 +1,14 @@
+graph(%merged_state : (Float(150), Float(10, 150), Float(10), Float(150, 360)),
+      %merged_state.3 : (Float(40, 20, 5, 5), Float(40)),
+      %merged_state.1 : (Float(20, 1, 4, 4), Float(20)),
+      %tangent0 : Float(),
+      %primals_9 : Float(SS(-2), 1, 29, 29),
+      %primals_10 : Float(SS(-2), 10)):
+  %6 : ((Float(SS(-2), 20, 13, 13), Long(SS(-2), 20, 13, 13)), int) = prim::GCG_Call_Submod[target="submod_fw0"](%primals_9, %merged_state.1)
+  %8 : int = prim::Constant[value=0]()
+  %9 : (Float(SS(-2), 20, 13, 13), Long(SS(-2), 20, 13, 13)) = prim::TupleIndex(%6, %8)
+  %11 : int = prim::Constant[value=1]()
+  %12 : int = prim::TupleIndex(%6, %11)
+  %16 : (Float(SS(-2), 40, 3, 3), Long(SS(-2), 40, 3, 3)) = prim::GCG_Call_Submod[target="submod_fw1"](%9, %merged_state.3)
+  %29 : Float() = prim::GCG_Call_Submod[target="submod_fw2"](%16, %12, %primals_10, %merged_state)
+  return (%29)

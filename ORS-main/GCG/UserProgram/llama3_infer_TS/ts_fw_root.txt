@@ -1,0 +1,43 @@
+graph(%merged_state : (Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-2), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3), SS(-5)), Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3)), Float(SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-2), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3), SS(-5)), Float(SS(-4), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-4), SS(-3)), Float(SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-3), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-5), SS(-3)), Float(SS(-3), SS(-5)), Float(SS(-3)), Float(SS(-3), SS(-5))),
+      %c_model_freqs_cis : ComplexFloat(SS(-6), SS(-7)),
+      %c_lifted_tensor_0 : Float(),
+      %kvs_l0 : Float(2, 16384, 8, 128),
+      %kvs_l1 : Float(2, 16384, 8, 128),
+      %kvs_l2 : Float(2, 16384, 8, 128),
+      %kvs_l3 : Float(2, 16384, 8, 128),
+      %kvs_l4 : Float(2, 16384, 8, 128),
+      %kvs_l5 : Float(2, 16384, 8, 128),
+      %kvs_l6 : Float(2, 16384, 8, 128),
+      %kvs_l7 : Float(2, 16384, 8, 128),
+      %kvs_l8 : Float(2, 16384, 8, 128),
+      %kvs_l9 : Float(2, 16384, 8, 128),
+      %kvs_l10 : Float(2, 16384, 8, 128),
+      %kvs_l11 : Float(2, 16384, 8, 128),
+      %kvs_l12 : Float(2, 16384, 8, 128),
+      %kvs_l13 : Float(2, 16384, 8, 128),
+      %kvs_l14 : Float(2, 16384, 8, 128),
+      %kvs_l15 : Float(2, 16384, 8, 128),
+      %kvs_l16 : Float(2, 16384, 8, 128),
+      %kvs_l17 : Float(2, 16384, 8, 128),
+      %kvs_l18 : Float(2, 16384, 8, 128),
+      %kvs_l19 : Float(2, 16384, 8, 128),
+      %kvs_l20 : Float(2, 16384, 8, 128),
+      %kvs_l21 : Float(2, 16384, 8, 128),
+      %kvs_l22 : Float(2, 16384, 8, 128),
+      %kvs_l23 : Float(2, 16384, 8, 128),
+      %kvs_l24 : Float(2, 16384, 8, 128),
+      %kvs_l25 : Float(2, 16384, 8, 128),
+      %kvs_l26 : Float(2, 16384, 8, 128),
+      %kvs_l27 : Float(2, 16384, 8, 128),
+      %kvs_l28 : Float(2, 16384, 8, 128),
+      %kvs_l29 : Float(2, 16384, 8, 128),
+      %kvs_l30 : Float(2, 16384, 8, 128),
+      %kvs_l31 : Float(2, 16384, 8, 128),
+      %tokens : Long(1, SS(-8)),
+      %dummy_tensor__for__start_pos : Float(SS(-9))):
+  %338 : int = prim::Constant[value=0]()
+  %339 : int = prim::Constant[value=1]()
+  %335 : (Long(1, 1), Float(SS(-19))) = prim::GCG_Call_Submod[target="submod_op"](%tokens, %dummy_tensor__for__start_pos, %c_model_freqs_cis, %kvs_l0, %kvs_l1, %kvs_l2, %kvs_l3, %kvs_l4, %kvs_l5, %kvs_l6, %kvs_l7, %kvs_l8, %kvs_l9, %kvs_l10, %kvs_l11, %kvs_l12, %kvs_l13, %kvs_l14, %kvs_l15, %kvs_l16, %kvs_l17, %kvs_l18, %kvs_l19, %kvs_l20, %kvs_l21, %kvs_l22, %kvs_l23, %kvs_l24, %kvs_l25, %kvs_l26, %kvs_l27, %kvs_l28, %kvs_l29, %kvs_l30, %kvs_l31, %c_lifted_tensor_0, %merged_state)
+  %330 : Long(1, 1) = prim::TupleIndex(%335, %338)
+  %333 : Float(SS(-19)) = prim::TupleIndex(%335, %339)
+  return (%330, %333)

@@ -1,0 +1,7 @@
+graph(%a.1 : Tensor,
+      %b.1 : Tensor,
+      %d.1 : Tensor):
+  %5 : int = prim::Constant[value=1]()
+  %c.1 : Tensor = aten::add(%a.1, %b.1, %5) # /root/test/generate_graph.py:11:12
+  %e.1 : Tensor = aten::add(%c.1, %d.1, %5) # /root/test/generate_graph.py:16:12
+  return (%e.1)

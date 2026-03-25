@@ -1,0 +1,24 @@
+graph(%x.1 : Tensor,
+      %y.1 : Tensor):
+  %24 : NoneType = prim::Constant()
+  %21 : bool = prim::Constant[value=1]() # /home/wyl/ORS/scripts/generate_graph_7.py:17:48
+  %17 : float = prim::Constant[value=2.5]() # /home/wyl/ORS/scripts/generate_graph_7.py:14:31
+  %20 : int = prim::Constant[value=1]() # /home/wyl/ORS/scripts/generate_graph_7.py:17:37
+  %37 : float = prim::Constant[value=9.9999999999999995e-07]() # /home/wyl/ORS/scripts/generate_graph_7.py:19:40
+  %a.1 : Tensor = aten::add(%x.1, %y.1, %20) # /home/wyl/ORS/scripts/generate_graph_7.py:8:12
+  %b.1 : Tensor = aten::mul(%x.1, %y.1) # /home/wyl/ORS/scripts/generate_graph_7.py:9:12
+  %11 : Tensor = aten::numpy_T(%b.1) # <string>:5:9
+  %c.1 : Tensor = aten::matmul(%a.1, %11) # /home/wyl/ORS/scripts/generate_graph_7.py:10:12
+  %d.1 : Tensor = aten::relu(%c.1) # /home/wyl/ORS/scripts/generate_graph_7.py:13:12
+  %16 : Tensor = aten::sigmoid(%d.1) # /home/wyl/ORS/scripts/generate_graph_7.py:14:12
+  %e.1 : Tensor = aten::mul(%16, %17) # /home/wyl/ORS/scripts/generate_graph_7.py:14:12
+  %23 : int[] = prim::ListConstruct(%20)
+  %mean_val.1 : Tensor = aten::mean(%e.1, %23, %21, %24) # /home/wyl/ORS/scripts/generate_graph_7.py:17:19
+  %29 : int[] = prim::ListConstruct(%20)
+  %std_val.1 : Tensor = aten::std(%e.1, %29, %21, %21) # /home/wyl/ORS/scripts/generate_graph_7.py:18:18
+  %35 : Tensor = aten::sub(%e.1, %mean_val.1, %20) # /home/wyl/ORS/scripts/generate_graph_7.py:19:13
+  %39 : Tensor = aten::add(%std_val.1, %37, %20) # /home/wyl/ORS/scripts/generate_graph_7.py:19:30
+  %f.1 : Tensor = aten::div(%35, %39) # /home/wyl/ORS/scripts/generate_graph_7.py:19:13
+  %43 : Tensor[] = prim::ListConstruct(%e.1, %f.1)
+  %z.1 : Tensor = aten::cat(%43, %20) # /home/wyl/ORS/scripts/generate_graph_7.py:20:12
+  return (%z.1)

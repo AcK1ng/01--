@@ -1,0 +1,30 @@
+{
+  "system": "ORS_Framework",
+  "benchmark": "Decode_Throughput",
+  "data": {
+    "batch_1": {
+      "1": { "throughput_req_s": 76.64 },
+      "4": { "throughput_req_s": 71.23 },
+      "16": { "throughput_req_s": 76.04 },
+      "32": { "throughput_req_s": 75.84 },
+      "64": { "throughput_req_s": 74.87 },
+      "128": { "throughput_req_s": 74.55 },
+      "512": { "throughput_req_s": 72.06 },
+      "1024": { "throughput_req_s": 68.58 },
+      "2048": { "throughput_req_s": 62.64 },
+      "4096": { "throughput_req_s": 55.09 }
+    },
+    "batch_10": {
+      "1": { "throughput_req_s": 116.84 },
+      "4": { "throughput_req_s": 116.37 },
+      "16": { "throughput_req_s": 115.55 },
+      "32": { "throughput_req_s": 116.31 },
+      "64": { "throughput_req_s": 113.30 },
+      "128": { "throughput_req_s": 105.59 },
+      "512": { "throughput_req_s": 109.79 },
+      "1024": { "throughput_req_s": 103.42 },
+      "2048": { "throughput_req_s": 90.52 },
+      "4096": { "throughput_req_s": 75.13 }
+    }
+  }
+}

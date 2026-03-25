@@ -1,0 +1,9 @@
+{
+    "threshold_bytes": 1106002,
+    "threshold_kb": 1080.08,
+    "base_latency_us": 47.40339696203193,
+    "bandwidth_gbps": 19.621467098337988,
+    "linear_slope": 5.096458868178638e-05,
+    "linear_intercept": 103.7794248012483,
+    "r_squared": 0.9997175431698619
+}

@@ -1,0 +1,27 @@
+graph(%view_3.1 : Float(SS(-2), 40, 3, 3),
+      %getitem_3.1 : Long(SS(-2), 40, 3, 3),
+      %merged_state : (Float(40), Float(40, 20, 5, 5)),
+      %3 : (Float(SS(-2), 40, 9, 9), Float(SS(-2), 20, 13, 13))):
+  %4 : int = prim::Constant[value=0]()
+  %5 : int = prim::Constant[value=1]()
+  %6 : float = prim::Constant[value=-0.01]()
+  %7 : bool = prim::Constant[value=1]()
+  %8 : bool = prim::Constant[value=0]()
+  %9 : int[] = prim::Constant[value=[3, 3]]()
+  %10 : int[] = prim::Constant[value=[0, 0]]()
+  %11 : int[] = prim::Constant[value=[1, 1]]()
+  %12 : int[] = prim::Constant[value=[40]]()
+  %13 : Float(SS(-2), 40, 9, 9) = prim::TupleIndex(%3, %4)
+  %14 : Float(SS(-2), 20, 13, 13) = prim::TupleIndex(%3, %5)
+  %15 : Float(40, 20, 5, 5) = prim::TupleIndex(%merged_state, %5)
+  %16 : Float(40) = prim::TupleIndex(%merged_state, %4)
+  %17 : Tensor = aten::max_pool2d_with_indices_backward(%view_3.1, %13, %9, %9, %10, %11, %8, %getitem_3.1)
+  %18 : bool[] = prim::ListConstruct(%7, %7, %7)
+  %19 : Float(SS(-2), 20, 13, 13), %20 : Tensor, %21 : Tensor = aten::convolution_backward(%17, %14, %15, %12, %11, %10, %11, %8, %10, %5, %18)
+  %22 : Tensor = aten::mul(%20, %6)
+  %23 : Float(40, 20, 5, 5) = aten::add(%15, %22, %5)
+  %24 : Tensor = aten::mul(%21, %6)
+  %25 : Float(40) = aten::add(%16, %24, %5)
+  %26 : (Float(40), Float(40, 20, 5, 5)) = prim::TupleConstruct(%25, %23)
+  %27 : (Float(SS(-2), 20, 13, 13), (Float(40), Float(40, 20, 5, 5))) = prim::TupleConstruct(%19, %26)
+  return (%27)
